@@ -28,8 +28,8 @@ TEXT TO TRANSLATE:{text}
 
 Things to note: 
 if a year is mentioned, translate it into the English format (e.g., 23년 → 2023).
-
-Only output the final translation without any heading and any necessary translator's notes.
+Only output the final translation and any necessary translator's notes.
+Do not include any headings or anything in this prompt in your final translation. 
 """
 
 
