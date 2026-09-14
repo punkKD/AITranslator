@@ -1,8 +1,4 @@
-import os
-import numpy as np
-import cohere  # Or your local Ollama / OpenAI client
-
-co = cohere.ClientV2(os.getenv("COHERE_API_KEY"))
+from cohereCall import *
 metadata_prompt= """
 
 You are an expert literary translator and cultural bridge fluent in both {source_lang} and {target_lang}. Your goal is to translate the text below into English while retaining maximum cultural nuance, social hierarchy, emotional subtext, and implied context.
