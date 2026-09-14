@@ -1,3 +1,4 @@
 .env
 docker.yaml
 translatorScratch.py
+translator.cpython-310.pyc
