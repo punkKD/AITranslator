@@ -1,5 +1,5 @@
 from textTranslator import *
-from imageTranslator import *
+from imageTextGrabber import *
 
 while True:
     choice=input("Choose an option:\n1. Translate Text\n2. Translate Image\n3. Exit\nEnter your choice (1, 2, or 3): ")
