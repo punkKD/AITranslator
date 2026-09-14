@@ -30,6 +30,7 @@ def translate_adaptive(text: str, source_lang: str, target_lang: str):
     # 4. Fallback/Pivot Routing Condition
     # If meaning loss is high (similarity threshold < 0.82), attempt the Pivot Path via Mandarin
     if similarity_score < 0.82:
+        print(f"Direct translation similarity score: {similarity_score:.4f} (below threshold, using direct translation)")
         pivot_prompt_1 = f"Translate from {source_lang} to Mandarin Chinese preserving all context and honorific nuances:\n{text}"
         zh_res = co.chat(model="command-a-translate", messages=[{"role": "user", "content": pivot_prompt_1}])
         zh_translation = zh_res.message.content[0].text
@@ -37,12 +38,22 @@ def translate_adaptive(text: str, source_lang: str, target_lang: str):
         pivot_prompt_2 = f"Translate from Mandarin Chinese to {target_lang}:\n{zh_translation}"
         en_res = co.chat(model="command-a-translate", messages=[{"role": "user", "content": pivot_prompt_2}])
         return en_res.message.content[0].text
+    else:
+        print(f"Direct translation similarity score: {similarity_score:.4f} (above threshold, using direct translation)")
 
     return direct_translation
+def detect_language(text: str):
+    #prompts sent to the model to detect the language of the input text and provide a confidence score
+    prompt = f"Detect the language of the following text and provide a confidence score:\n{text}"
 
-source_text = "안녕하세요, 오늘 날씨가 참 좋네요."
-soure_lanng = "Korean"
+    response = co.chat(model="command-a-translate", messages=[{"role": "user", "content": prompt}])
+    detected_language = response.message.content[0].text
+    confidence_score = response.message.content[1].text if len(response.message.content) > 1 else "N/A"
+    return detected_language,confidence_score
+
+source_text = input("Enter text to translate: ")
+source_lang, confidence = detect_language(source_text)
 target_lang = "English"
-
-while True:
-    
+translated_text = translate_adaptive(source_text, source_lang, target_lang) 
+print(f"Detected Language: {source_lang} (Confidence: {confidence})")
+print(f"Translated Text: {translated_text}")   
