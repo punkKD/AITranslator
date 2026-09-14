@@ -1,9 +1,8 @@
 from cohereCall import *
 metadata_prompt= """
-
+If there is a specific context for the text, please use it but do not include in the translation. 
+The context is for a better and more specific prompt only.
 You are an expert literary translator and cultural bridge fluent in both {source_lang} and {target_lang}. Your goal is to translate the text below into English while retaining maximum cultural nuance, social hierarchy, emotional subtext, and implied context.
-Follow this exact three-step process:
-
 Follow this exact three-step process:
 
 1. METADATA ANALYSIS: Before translating, identify and list any:
@@ -24,8 +23,9 @@ TEXT TO TRANSLATE:{text}
 
 Things to note: 
 if a year is mentioned, translate it into the English format (e.g., 23년 → 2023).
-Only output the final translation and any necessary translator's notes.
+Only output the nuanced translation (with the title Translation) and any necessary translator's notes.
 Do not include any headings or anything in this prompt in your final translation. 
+if the input text is structured, segment it into paragraphs or bullet points in the translation to preserve the original structure.   
 """
 
 
