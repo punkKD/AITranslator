@@ -20,13 +20,16 @@ and subtext over a rigid literal, word-for-word translation. If a sentence requi
 original respect or sarcasm, include them naturally.
 
 3. TRANSLATOR'S NOTES: Briefly explain any critical nuances or cultural context that were impossible to fully capture 
-in the {target_lang} text.
+in the {target_lang} text.\n
 
 CONTEXT OF THE PIECE: {context}
 
 TEXT TO TRANSLATE:{text}
 
-Only provide the final translation without any heading and any necessary translator's notes.
+Things to note: 
+if a year is mentioned, translate it into the English format (e.g., 23년 → 2023).
+
+Only output the final translation without any heading and any necessary translator's notes.
 """
 
 
