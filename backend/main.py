@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 from functions.textTranslator import *
 from functions.imageTextGrabber import *
+from functions.textFormatter import *
 
 
 app = FastAPI(title="KD Translate APP")
@@ -26,7 +27,7 @@ class TextTranslateRequest(BaseModel):
 
 class TextTranslateResponse(BaseModel):
     detected_lang: str
-    confidence: str
+    translator_notes: str
     translated_text: str
 
 
@@ -50,12 +51,14 @@ def translate_text(req: TextTranslateRequest)-> TextTranslateResponse:
     try:
         source_lang, confidence = detect_language(req.source_text)
         translated_text = translate_adaptive(req.source_text, source_lang, req.target_lang)
+        translated_text, translator_notes = parse_translation_response(translated_text)
+        print(f"Detected Language: {source_lang}, Confidence: {confidence}, Translated Text: {translated_text}, Translator Notes: {translator_notes}")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
     return TextTranslateResponse(
         detected_lang=source_lang,
-        confidence=confidence,
+        translator_notes=translator_notes,
         translated_text=translated_text,
     )
 

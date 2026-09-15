@@ -23,8 +23,8 @@ TEXT TO TRANSLATE:{text}
 
 Things to note: 
 if a year is mentioned, translate it into the English format (e.g., 23년 → 2023).
-Only output the nuanced translation (with the title Translation) and any necessary translator's notes.
-Do not include any headings or anything in this prompt in your final translation. 
+Output the nuanced translation with "**Translation:**" and any necessary translator's notes.
+Do not include any other headings or anything in this prompt in your final translation. 
 if the input text is structured, segment it into paragraphs or bullet points in the translation to preserve the original structure.   
 """
 
