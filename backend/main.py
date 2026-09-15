@@ -20,6 +20,7 @@ app.add_middleware(
 
 class TextTranslateRequest(BaseModel):
     source_text: str
+    source_lang: Optional[str] = "auto"
     target_lang: str = "English"
 
 
@@ -45,7 +46,7 @@ class ImageTranslateResponse(BaseModel):
 
 
 @app.post("/translate/text", response_model=TextTranslateResponse)
-def translate_text(req: TextTranslateRequest):
+def translate_text(req: TextTranslateRequest)-> TextTranslateResponse:
     try:
         source_lang, confidence = detect_language(req.source_text)
         translated_text = translate_adaptive(req.source_text, source_lang, req.target_lang)
@@ -60,7 +61,7 @@ def translate_text(req: TextTranslateRequest):
 
 
 @app.post("/translate/image", response_model=ImageTranslateResponse)
-def translate_image(req: ImageTranslateRequest):
+def translate_image(req: ImageTranslateRequest)-> ImageTranslateResponse:
     try:
         identified_text = detect_image(
             req.image_url,
@@ -80,7 +81,7 @@ def translate_image(req: ImageTranslateRequest):
         translated_text=translated_text,
     )
 
-@app.get("/api/health")
+@app.get("/translate/health")
 def health() -> dict:
     return {"status": "ok"}
 
@@ -88,4 +89,5 @@ def health() -> dict:
 # This lets one container serve both the API and the UI in production.
 frontend_dist = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
 if os.path.isdir(frontend_dist):
+    print(f"Serving frontend from {frontend_dist}")
     app.mount("/", StaticFiles(directory=frontend_dist, html=True), name="static")

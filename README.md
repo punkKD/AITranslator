@@ -6,7 +6,7 @@ Mobile-first translate UI built with Vue 3, backed by a FastAPI API.
 ```
 lingo-app/
 ├── backend/
-│   ├── main.py            # FastAPI app + /api/translate endpoint
+│   ├── main.py            # FastAPI app + /translate endpoint
 │   └── requirements.txt
 ├── frontend/
 │   ├── src/
@@ -36,7 +36,7 @@ npm install
 npm run dev
 ```
 
-Open the Vite dev URL (usually `http://localhost:5173`). API calls to `/api/*`
+Open the Vite dev URL (usually `http://localhost:5173`). API calls to `/translate/*`
 are proxied to the FastAPI server on port 8000 (see `vite.config.js`), so
 CORS isn't an issue in dev.
 

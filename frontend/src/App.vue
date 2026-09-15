@@ -3,16 +3,33 @@ import { ref } from 'vue'
 
 const LANGUAGES = [
   { code: 'auto', label: 'Detect' },
-  { code: 'en', label: 'English' },
-  { code: 'es', label: 'Spanish' },
-  { code: 'fr', label: 'French' },
-  { code: 'de', label: 'German' },
-  { code: 'ja', label: 'Japanese' },
-  { code: 'zh', label: 'Chinese' },
+{ code: 'en', label: 'English' },
+{ code: 'fr', label: 'French' },
+{ code: 'es', label: 'Spanish' },
+{ code: 'it', label: 'Italian' },
+{ code: 'de', label: 'German' },
+{ code: 'pt', label: 'Portuguese' },
+{ code: 'ja', label: 'Japanese' },
+{ code: 'ko', label: 'Korean' },
+{ code: 'zh', label: 'Chinese' },
+{ code: 'ar', label: 'Arabic' },
+{ code: 'ru', label: 'Russian' },
+{ code: 'pl', label: 'Polish' },
+{ code: 'tr', label: 'Turkish' },
+{ code: 'vi', label: 'Vietnamese' },
+{ code: 'nl', label: 'Dutch' },
+{ code: 'cs', label: 'Czech' },
+{ code: 'id', label: 'Indonesian' },
+{ code: 'uk', label: 'Ukrainian' },
+{ code: 'ro', label: 'Romanian' },
+{ code: 'el', label: 'Greek' },
+{ code: 'hi', label: 'Hindi' },
+{ code: 'he', label: 'Hebrew' },
+{ code: 'fa', label: 'Persian' },
 ]
 
 const sourceLang = ref('auto')
-const targetLang = ref('es')
+const targetLang = ref('en')
 const sourceText = ref('')
 const outputText = ref('')
 const isLoading = ref(false)
@@ -36,11 +53,11 @@ async function translate() {
   outputText.value = ''
 
   try {
-    const res = await fetch('/api/translate', {
+    const res = await fetch('/translate/text', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        text: sourceText.value,
+        source_text: sourceText.value,
         source_lang: sourceLang.value,
         target_lang: targetLang.value,
       }),
@@ -53,6 +70,7 @@ async function translate() {
 
     const data = await res.json()
     outputText.value = data.translated_text
+    console.log('Translation successful:', data)
   } catch (err) {
     errorMessage.value = err.message || 'Something went wrong. Try again.'
   } finally {
