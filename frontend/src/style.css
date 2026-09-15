@@ -1,0 +1,55 @@
+:root {
+  --bg: #101820;
+  --surface: #1b2530;
+  --surface-raised: #212d3a;
+  --border: #2c3947;
+  --text: #f5f3ef;
+  --text-muted: #97a3b0;
+  --accent: #e8a33d;
+  --accent-text: #101820;
+  --teal: #4fd1c5;
+  --danger: #e2725b;
+
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-tap-highlight-color: transparent;
+}
+
+#app {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+button {
+  font-family: inherit;
+}
+
+textarea:focus,
+button:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
