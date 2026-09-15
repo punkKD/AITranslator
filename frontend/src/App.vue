@@ -31,14 +31,16 @@ const LANGUAGES = [
 const sourceLang = ref('auto')
 const targetLang = ref('en')
 const sourceText = ref('')
-const outputText = ref('')
+const outputLanguage = ref('')
+const outputTranslatedText = ref('')
+const outputTranslatorNotes= ref('')
 const isLoading = ref(false)
 const errorMessage = ref('')
 
 function swapLanguages() {
   if (sourceLang.value === 'auto') return
   ;[sourceLang.value, targetLang.value] = [targetLang.value, sourceLang.value]
-  ;[sourceText.value, outputText.value] = [outputText.value, sourceText.value]
+  ;[sourceText.value, outputTranslatedText.value] = [outputTranslatedText.value, sourceText.value]
 }
 
 async function translate() {
@@ -50,7 +52,7 @@ async function translate() {
   }
 
   isLoading.value = true
-  outputText.value = ''
+  outputTranslatedText.value = ''
 
   try {
     const res = await fetch('/translate/text', {
@@ -69,7 +71,9 @@ async function translate() {
     }
 
     const data = await res.json()
-    outputText.value = data.translated_text
+    outputLanguage.value = data.detected_lang
+    outputTranslatedText.value = data.translated_text
+    outputTranslatorNotes.value = data.translator_notes
     console.log('Translation successful:', data)
   } catch (err) {
     errorMessage.value = err.message || 'Something went wrong. Try again.'
@@ -79,8 +83,8 @@ async function translate() {
 }
 
 function copyOutput() {
-  if (!outputText.value) return
-  navigator.clipboard?.writeText(outputText.value)
+  if (!outputTranslatedText.value) return
+  navigator.clipboard?.writeText(outputTranslatedText.value)
 }
 </script>
 
@@ -127,17 +131,17 @@ function copyOutput() {
         ></textarea>
       </div>
 
-      <div class="card output-card" :class="{ 'is-empty': !outputText && !isLoading }">
+      <div class="card output-card" :class="{ 'is-empty': !outputTranslatedText && !isLoading }">
         <div v-if="isLoading" class="loading">
           <span class="dot"></span>
           <span class="dot"></span>
           <span class="dot"></span>
         </div>
-        <p v-else-if="outputText" class="output-text">{{ outputText }}</p>
+        <p v-else-if="outputTranslatedText" class="output-text">{{ outputTranslatedText }}</p>
         <p v-else class="placeholder">Translation appears here</p>
 
         <button
-          v-if="outputText && !isLoading"
+          v-if="outputTranslatedText && !isLoading"
           class="copy-btn"
           @click="copyOutput"
           aria-label="Copy translation"
@@ -145,7 +149,24 @@ function copyOutput() {
           Copy
         </button>
       </div>
+      <div class="card output-card" :class="{ 'is-empty': !outputTranslatedText && !isLoading }">
+        <div v-if="isLoading" class="loading">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+        <p v-else-if="outputTranslatedText" class="output-text">{{ outputTranslatorNotes }}</p>
+        <p v-else class="placeholder">Translation notes here</p>
 
+        <button
+          v-if="outputTranslatedText && !isLoading"
+          class="copy-btn"
+          @click="copyOutput"
+          aria-label="Copy translation"
+        >
+          Copy
+        </button>
+      </div>
       <p v-if="errorMessage" class="error" role="alert">{{ errorMessage }}</p>
     </main>
 
