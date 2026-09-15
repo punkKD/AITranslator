@@ -1,0 +1,9 @@
+services:
+  lingo:
+    build: .
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    # Uncomment to persist any app data across container rebuilds:
+    # volumes:
+    #   - ./data:/app/data

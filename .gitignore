@@ -1,6 +1,7 @@
 .env
-docker.yaml
-translatorScratch.py
+.venv
+node_modules/
+frontend/dist/
 
 # Python bytecode cache
 __pycache__/
