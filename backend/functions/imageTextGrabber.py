@@ -1,4 +1,4 @@
-from cohereCall import *
+from functions.cohereCall import *
 metadata_prompt= """
 1. The context of the text in the image (a signboard, menu, name, etc.): {image_context}
 2. The country or region where the image was taken: {image_location}

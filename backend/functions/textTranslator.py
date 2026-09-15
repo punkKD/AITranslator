@@ -1,4 +1,4 @@
-from cohereCall import *
+from functions.cohereCall import *
 metadata_prompt= """
 If there is a specific context for the text, please use it but do not include in the translation. 
 The context is for a better and more specific prompt only.
@@ -15,7 +15,7 @@ and subtext over a rigid literal, word-for-word translation. If a sentence requi
 original respect or sarcasm, include them naturally.
 
 3. TRANSLATOR'S NOTES: Briefly explain any critical nuances or cultural context that were impossible to fully capture 
-in the {target_lang} text.\n
+in the {target_lang} text.
 
 CONTEXT OF THE PIECE: {context}
 
